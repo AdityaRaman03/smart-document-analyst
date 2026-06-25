@@ -54,7 +54,7 @@ This opens the app in your browser at **http://localhost:8501**.
 
 ## Architecture
 
-![System Architecture](Architecture.jpg)
+![System Architecture](assets/Architecture.jpg)
 
 The system has two pipelines that share a single Chroma vector store: an
 ingestion pipeline (write path) that turns an uploaded PDF into searchable
@@ -231,6 +231,6 @@ metadata so retrieval could filter or span sources.
 
 ## Screenshots
 
-![App interface — ingestion](Working%201.png)
+![App interface — ingestion](assets/Working%201.png)
 
-![App interface — query and answer](Working_2.png)
+![App interface — query and answer](assets/Working_2.png)
