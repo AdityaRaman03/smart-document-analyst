@@ -18,28 +18,28 @@ Built with Streamlit, LangChain, Chroma (vector store), Google Gemini
 ### 1. Set up API keys
 Create a file named `.env` in the project root with your keys:
 
-\`\`\`
+```
 GROQ_API_KEY=your_groq_key_here
 GOOGLE_API_KEY=your_gemini_key_here
-\`\`\`
+```
 
 - Groq key: https://console.groq.com
 - Gemini key: https://aistudio.google.com/apikey
 
 ### 2. Install dependencies
 
-\`\`\`bash
+```bash
 pip install streamlit python-dotenv langchain-core langchain-chroma \
   langchain-groq langchain-google-genai langchain-text-splitters \
   langchain-pymupdf4llm
-\`\`\`
+```
 
 ### 3. Run the app
 From inside the project folder:
 
-\`\`\`bash
+```bash
 streamlit run app.py
-\`\`\`
+```
 
 This opens the app in your browser at **http://localhost:8501**.
 
@@ -51,6 +51,15 @@ This opens the app in your browser at **http://localhost:8501**.
 
 > **Note:** Each new upload replaces the previous document — the app rebuilds
 > the vector store from scratch on every ingest.
+
+## Architecture
+
+![System Architecture](Architecture.jpg)
+
+The system has two pipelines that share a single Chroma vector store: an
+ingestion pipeline (write path) that turns an uploaded PDF into searchable
+vectors, and a retrieval + generation pipeline (read path) that answers questions
+from those vectors.
 
 ## Ingestion Pipeline
 
@@ -70,8 +79,8 @@ the next stage writes them to a temporary file the loader can read.
 
 ### Load_Documents
 
-`PyMuPDF4LLMLoader` extracts text from the PDF into Document objects (one per page) with 
-source and page metadata. PyMuPDF4LLMis fast and produces clean, Markdown-style text 
+`PyMuPDF4LLMLoader` extracts text from the PDF into Document objects (one per page) with
+source and page metadata. PyMuPDF4LLM is fast and produces clean, Markdown-style text
 well-suited for LLM consumption, which is why it was chosen.
 
 Its limitation is that it handles pure text well but does not reliably parse
@@ -97,8 +106,8 @@ size limit, which keeps breaks on semantic boundaries rather than mid-token.
 (source, page) required for downstream citation.
 
 Alternatives considered:
-- **[Fixed-size / CharacterTextSplitter]** 
-- **[Semantic / token-based / Markdown-aware splitting]** 
+- **[Fixed-size / CharacterTextSplitter]**
+- **[Semantic / token-based / Markdown-aware splitting]**
 
 ### Vectorization (Create_Embeddings)
 
@@ -197,7 +206,7 @@ while the model runs.
 
 ## FAQ
 
-markdown**Q) What kind of PDF can I upload?**
+**Q) What kind of PDF can I upload?**
 Text-based PDFs — documents where the text is selectable/extractable (digitally
 created PDFs, exported docs, etc.). Scanned PDFs or image-only PDFs won't work,
 since there's no text layer to extract and OCR isn't supported. Tables and
@@ -222,4 +231,6 @@ metadata so retrieval could filter or span sources.
 
 ## Screenshots
 
+![App interface — ingestion](Working%201.png)
 
+![App interface — query and answer](Working_2.png)
