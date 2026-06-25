@@ -8,8 +8,6 @@ load_dotenv()
 
 embedding_model = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 
-
-
 """query = input("Enter your query")
 result=vectorstore.similarity_search(query, k=3)"""
 
@@ -23,7 +21,7 @@ def generate_q(query, chat_history):
     persist_directory="./chroma_db",
     embedding_function=embedding_model,
     )
-    # Rewrite question to be standalone using chat history
+    # If previous chat history available, then reformat question to better reflect history. Else, keep it as it is.
     if chat_history:
         rewrite_messages = [
             SystemMessage(content="Given the chat history, rewrite the new question to be standalone and searchable. Return only the rewritten question."),
@@ -36,7 +34,7 @@ def generate_q(query, chat_history):
     else:
         search_query = query
 
-    # Retrieve relevant chunks
+    # Retrieve 3 relevent chunks using 3-NN
     retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
     docs = retriever.invoke(search_query)
 

@@ -46,7 +46,7 @@ def create_embeddings(chunks, persist_dir="./chroma_db"):
     )
     return vectorstore
 
-# Standalone test only (run: python ingestion_pipeline.py) — not used by the app.
+# Standalone test only (run: python ingestion_pipeline.py) — not used by the app. Useful for Verification 
 # if __name__ == "__main__":
 #     filepath = "/home/aditya/Downloads/rag_test_doc.pdf"
 #

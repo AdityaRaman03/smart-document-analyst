@@ -1,6 +1,5 @@
 import shutil
 import streamlit as st
-
 from ingestion_pipeline import load_documents, text_splitter, create_embeddings
 from retrieval_generation import generate_q
 

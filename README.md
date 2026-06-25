@@ -220,3 +220,6 @@ a new file replaces the previous one. Querying across multiple documents would
 require removing the wipe step in the ingest block and adding per-document
 metadata so retrieval could filter or span sources.
 
+## Screenshots
+
+
