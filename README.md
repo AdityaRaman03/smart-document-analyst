@@ -54,7 +54,7 @@ This opens the app in your browser at **http://localhost:8501**.
 
 ## Architecture
 
-![System Architecture](assets/Architecture.jpg)
+![System Architecture](assets/Architecture_diagram.jpg)
 
 The system has two pipelines that share a single Chroma vector store: an
 ingestion pipeline (write path) that turns an uploaded PDF into searchable
@@ -124,8 +124,8 @@ retrieval.
 The bottom row of the diagram is the read path. It runs once per question and
 turns a user query into an answer grounded in the ingested document. All of it
 lives in `generate_q(query, chat_history)` in `retrieval_generation.py`. Flow:
-Query → Reformat Query → Embed Reformatted Query → Similarity Search → Generate
-Answer → Response.
+**Query → Reformat Query → Embed Reformatted Query → Similarity Search → Generate
+Answer → Response.**
 
 ### Query
 
